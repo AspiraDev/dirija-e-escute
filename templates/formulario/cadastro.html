@@ -1,0 +1,112 @@
+{% include 'base.html' %}
+{% with messages= get_flashed_messages() %} 
+{% if messages %} 
+    <div class="alert alert-danger" role="alert"> 
+        {% for message in messages %} 
+            {{message}} 
+        {% endfor %} 
+    </div> 
+{% endif %} 
+
+{% endwith %}
+
+<style>
+    form{
+        text-align: -webkit-center;
+    }
+.form-group{
+    margin-bottom: 20px;
+}
+.form-control{
+    width: 370px;
+}
+    
+</style>
+<h1>Coloque suas Informações</h1> 
+<div class="container">
+<form method="post" action="/admin/cadastrar" enctype="multipart/form-data" style="background-color: transparent;">
+    <div class="form-row" >
+      <div class="form-group col-md-6" >
+        <label for="cidade">Cidade</label>
+        <input type="text" class="form-control" name='nome_cidade' id="cidade" placeholder="São Paulo" required>
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="estado">Estado</label>
+        <select id="estado" name='nome_estado' class="form-control" >
+          <option selected>Escolha...</option>
+          <option>Acre</option>
+          <option>Alagoas</option>
+          <option>Amapá</option>
+          <option>Amazonas</option>
+          <option>Bahia</option>
+          <option>Ceará</option>
+          <option>Distrito Federal</option>
+          <option>Espírito Santo</option>
+          <option>Goiás</option>
+          <option>Maranhão</option>
+          <option>Mato Grosso</option>
+          <option>Mato Grosso do Sul</option>
+          <option>Minas Gerais</option>
+          <option>Pará</option>
+          <option">Paraíba</option>
+          <option>Paraná</option>
+          <option>Pernambuco</option>
+          <option>Piauí</option>
+          <option>Rio de Janeiro</option>
+          <option>Rio Grande do Norte</option>
+          <option>Rio Grande do Sul</option>
+          <option>Rondônia</option>
+          <option>Roraima</option>
+          <option>Santa Catarina</option>
+          <option>São Paulo</option>
+          <option>Sergipe</option>
+          <option>Tocantins</option>
+        </select>
+      </div>
+      
+
+
+
+    <div class="form-group">
+      <label for="video">Link Youtube</label>
+      <input type="text" class="form-control" name='link_video' id="video" placeholder="Exemplo: https://www.youtube.com/watch?v=EIFt8QBuKD8" required>
+    </div>
+
+    <div class="form-group col-md-6">
+        <label for="radio">Link Rádio</label>
+        <input type="text" class="form-control" name='link_radio' id="link_radio" placeholder="https://www.youtube.com/watch?v=" required>
+      </div>
+
+
+    <div class="form-group col-md-6">
+      <label for="nome-radio">Nome da Rádio</label>
+      <input type="text" class="form-control" name='nome_radio' id="nome-radio" placeholder="Radio FM SUL 102.1" required>
+    </div>
+ 
+
+  
+  <div class="form-group">
+    <label for="descricao">Descrição</label>
+    <textarea id="descricao" class="form-control" name="descricao" required></textarea>
+  
+  
+  </div>
+
+  
+
+
+      
+
+
+      
+      <div class="form-group"> 
+        <button type="submit" class="btn btn-warning">Cadastrar</button>
+        <a href="/" class="btn btn-primary">Voltar</a> 
+    </div>
+
+  </form>
+</div>
+
+
+{% include 'footer.html' %}

@@ -1,0 +1,38 @@
+{% include 'base.html' %}
+<div class="container">
+<table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Cidade</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Nome da Rádio</th>
+        <th scope="col">Link Rádio</th>
+        <th scope="col">Link Video</th>
+        <th scope="col">Descrição</th>
+      </tr>
+    </thead>
+    <tbody>
+
+     {% for i in dados %}     
+      <tr>
+        <th scope="row">{{i['id']}}</th>
+        <td>{{i['cidade']}}</td>
+        <td>{{i['estado']}}</td>
+        <td>{{i['nomeRadio']}}</td>
+        <td>{{i['linkRadio']}}</td>
+        <td>{{i['linkYoutube']}}</td>
+        <td>{{i['descricao'][:20]}}...</td>
+        <td>
+            <a class="btn btn-warning" href="/admin/editar/{{i['id']}}">Editar</a>
+            <a class="btn btn-danger" onclick="return confirm('Tenha certeza que deseja excluir o cadastro?')" href="/admin/apagar/{{i['id']}}">Eliminar</a>
+        </td>
+      </tr>
+      {% endfor %}
+
+
+    </tbody>
+  </table>
+</div>
+
+{% include 'footer.html' %}
