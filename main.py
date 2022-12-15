@@ -1,104 +1,77 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash
 app = Flask(__name__)
-from pymongo import MongoClient 
 from bson.json_util import dumps, loads 
+from bson import json_util, ObjectId
 import os
-
-client = MongoClient('mongodb://localhost:27017/')
-db = client["cidades"]
-coluna = db["lista"]
+import json
+from db import *
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
    
-@app.route('/admin')
-def admin():
-    return render_template('formulario/index.html', dados = coluna.find())
+@app.route('/admin/<modalidade>', methods=['GET', 'POST'])
+def admin(modalidade):
+    if modalidade == 'andando':
+        coluna = db["andando"]
+        return render_template('formulario/index.html', dados = coluna.find())
 
-@app.route("/api", methods=['GET', 'POST'])
-def api():
-    cursor = coluna.find() 
-    list_cur = list(cursor) 
-    json_data = dumps(list_cur, indent = 2, ensure_ascii=False)
-
-
-
-           
-    return (json_data)
+    if modalidade == 'dirigindo':
+        coluna = db["dirigindo"]
+        return render_template('formulario/index.html', dados = coluna.find())
 
 
-@app.route('/admin/cadastro')
-def cadastro():
-    return render_template('formulario/cadastro.html')
 
-@app.route("/admin/cadastrar", methods=['GET', 'POST'])
+@app.route("/admin/add", methods=['GET', 'POST'])
 def cadastrar():
     if request.method == 'POST':
-        cidade = request.form['nome_cidade']
-        estado = request.form['nome_estado']
-        video = request.form['link_video']
-        video = video.replace('https://www.youtube.com/watch?v=', '')
-        radio = request.form['link_radio']
-        descricao = request.form['descricao']
-        nomeRadio = request.form['nome_radio']
-
-        id = coluna.find().limit(1).sort([('$natural',-1)])
-        for doc in id:
-            id = doc['id'] + 1
-        
-        cidades = { "id": id, "cidade": cidade, "estado" : estado, "linkYoutube" : video, "linkRadio" : radio, "nomeRadio" : nomeRadio, "descricao" : descricao }
-        x = coluna.insert_one(cidades)   
-
-        cursor = coluna.find() 
-        list_cur = list(cursor) 
-    json_data = dumps(list_cur, indent = 2, ensure_ascii=False)
-
-    with open('static/data.json', 'w', encoding='utf8') as file: 
-        file.write(json_data) 
+        dados = request.get_json()
+        modalidade = dados['modalidade']
+        addCity(modalidade, dados)
+        return redirect("/admin")
+    #addCity(cadastrar)
+    else:
         return redirect("/admin")
 
+@app.route("/admin/get/<modalidade>/all", methods=['GET', 'POST'])
+def puxarTudo(modalidade):
+    return json.loads(json_util.dumps(getAll(modalidade)))
+
+@app.route("/admin/get/<modalidade>/<id>", methods=['GET', 'POST'])
+def puxar(modalidade, id):
+    return json.loads(json_util.dumps(getCity(modalidade, id)))
+
+@app.route("/api/<cidade>", methods=['GET', 'POST'])
+def radio(cidade):
+        radio = getRadio(cidade)
+        video = getVideo(cidade)
+        estado = getEstado(cidade)
+        descricao = getDescription(cidade)
+        data = {
+            "cidade": estado[0],
+            "estado": estado[1],
+            "linkRadio": radio[1],
+            "nomeRadio": radio[0],
+            "video": video,
+            "descricao": descricao
+        }
+        return json.loads(json_util.dumps(data))
 
 
-@app.route('/admin/editar/<id>')
+
+@app.route('/admin/edit/<id>', methods=['GET', 'POST'])
 def editar(id):
-    id = int(id)
-    dados = coluna.find_one({'id': id})
-    print(dados)
-    return render_template('formulario/editar.html', id = id, dados = dados)
-
-@app.route('/admin/editado/<id>', methods=['POST', 'GET'])
-def editado(id):
-        cidade = request.form['nome_cidade']
-        estado = request.form['nome_estado']
-        video = request.form['link_video']
-        video = video.replace('https://www.youtube.com/watch?v=', '')
-        radio = request.form['link_radio']
-        descricao = request.form['descricao']
-        nomeRadio = request.form['nome_radio']
-        id = int(id)
-        alvo = {"id": id}
-
-        novo = ([{"$set":  { "id": id, "cidade": cidade, "estado" : estado, "linkYoutube" : video, "linkRadio" : radio, "nomeRadio" : nomeRadio, "descricao" : descricao }}]) 
-        coluna.update_one(alvo, novo) 
-
-        cursor = coluna.find() 
-        list_cur = list(cursor) 
-        json_data = dumps(list_cur, indent = 2, ensure_ascii=False)
-
-        with open('static/data.json', 'w', encoding='utf8') as file: 
-          file.write(json_data) 
-          
+    if request.method == 'POST':
+        dados = request.get_json()
+        modalidade = dados['modalidade']
+        editCity(modalidade, id, dados)
         return redirect("/admin")
 
-@app.route('/admin/apagar/<id>')
-def apagar(id):
-    id = int(id)
-    coluna.delete_one({'id': id})
-    return redirect("/admin")  
-
-    return render_template('admin.html')
+@app.route('/admin/apagar/<modalidade>/<id>')
+def apagar(modalidade, id):
+    delCity(modalidade, id)
+    return redirect("/admin/"+modalidade)  
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

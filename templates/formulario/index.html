@@ -1,4 +1,90 @@
 {% include 'base.html' %}
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+<div class="container mt-5">
+
+  <button type="button" class="btn btn-outline-success float-right" data-toggle="modal" data-target="#addCidade">Adicionar Cidade</button>
+
+  <div class="modal fade" id="addCidade" tabindex="-1" aria-labelledby="addCidade" aria-hidden="true">
+    <div class="modal-dialog">
+      <div style="background-color: #456734;" class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="addCidade">Adicionar Cidade</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form id="cidadeForm" action="" method="POST">
+                <div class="form-group">
+                    <label>Modalidade</label>
+                    <select class="form-control" id="modalidade">
+                      <option value="dirigindo">Dirigindo</option>
+                      <option value="andando">Andando</option>
+                    </select>
+
+                    <label>Cidade</label>
+                    <input type="text" class="form-control" id="cidade" placeholder="Campinas" required>
+
+                    <label>Estado</label>
+                    <select class="form-control" id="estado" required>
+                      <option value="AC">Acre</option>
+                      <option value="AL">Alagoas</option>
+                      <option value="AP">Amapá</option>
+                      <option value="AM">Amazonas</option>
+                      <option value="BA">Bahia</option>
+                      <option value="CE">Ceará</option>
+                      <option value="DF">Distrito Federal</option>
+                      <option value="ES">Espírito Santo</option>
+                      <option value="GO">Goiás</option>
+                      <option value="MA">Maranhão</option>
+                      <option value="MT">Mato Grosso</option>
+                      <option value="MS">Mato Grosso do Sul</option>
+                      <option value="MG">Minas Gerais</option>
+                      <option value="PA">Pará</option>
+                      <option value="PB">Paraíba</option>
+                      <option value="PR">Paraná</option>
+                      <option value="PE">Pernambuco</option>
+                      <option value="PI">Piauí</option>
+                      <option value="RJ">Rio de Janeiro</option>
+                      <option value="RN">Rio Grande do Norte</option>
+                      <option value="RS">Rio Grande do Sul</option>
+                      <option value="RO">Rondônia</option>
+                      <option value="RR">Roraima</option>
+                      <option value="SC">Santa Catarina</option>
+                      <option value="SP">São Paulo</option>
+                      <option value="SE">Sergipe</option>
+                      <option value="TO">Tocantins</option>
+                    </select>
+
+                    <label>Link do Youtube</label>
+                    <input type="text" class="form-control" id="link_video" placeholder="https://www.youtube.com/watch?v=SF0--13sONY" required>
+
+                    <label>Link da Rádio</label>
+                    <input type="text" class="form-control" id="link_radio" placeholder="https://www.radio.com/8fw4e84fw.mp3" required>
+
+                    <label>Nome da Rádio</label>
+                    <input type="text" class="form-control" id="nome_radio" placeholder="FM CANÁRIO 108.3" required>
+
+                    <div class="form-group">
+                      <label for="descricao">Descrição</label>
+                      <textarea id="descricao" class="form-control" placeholder="Campinas é uma cidade no sudeste brasileiro, a noroeste de São Paulo. A sua Catedral Metropolitana possui um interior em madeira de jacarandá e um museu de arte sacra." required></textarea>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" id="adicionar" class="btn btn-success">Adicionar</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                </div>
+            </form>
+        </div>
+
+  
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+
 <div class="container">
 <table class="table table-dark">
     <thead>
@@ -16,16 +102,16 @@
 
      {% for i in dados %}     
       <tr>
-        <th scope="row">{{i['id']}}</th>
+        <th scope="row">{{i['_id']}}</th>
         <td>{{i['cidade']}}</td>
         <td>{{i['estado']}}</td>
-        <td>{{i['nomeRadio']}}</td>
-        <td>{{i['linkRadio']}}</td>
-        <td>{{i['linkYoutube']}}</td>
+        <td>{{i['nome_radio']}}</td>
+        <td>{{i['link_radio'][:25]}}</td>
+        <td>{{i['link_video']}}</td>
         <td>{{i['descricao'][:20]}}...</td>
         <td>
-            <a class="btn btn-warning" href="/admin/editar/{{i['id']}}">Editar</a>
-            <a class="btn btn-danger" onclick="return confirm('Tenha certeza que deseja excluir o cadastro?')" href="/admin/apagar/{{i['id']}}">Eliminar</a>
+            <button class="btn btn-warning" id="editarCidade" data-toggle="modal" value="{{i['_id']}}" data-target="#editCidade">Editar</button>
+            <a class="btn btn-danger" id="eliminarCidade" onclick="return confirm('Tenha certeza que deseja excluir o cadastro?')" href="/admin/apagar/{{i['modalidade']}}/{{i['_id']}}">Eliminar</a>
         </td>
       </tr>
       {% endfor %}
@@ -34,5 +120,84 @@
     </tbody>
   </table>
 </div>
+<div class="modal fade" id="editCidade" tabindex="-1" aria-labelledby="editCidade" aria-hidden="true">
+  <div class="modal-dialog">
+    <div style="background-color: #456734;" class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="editCidade">Editar Cidade</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form id="cidadeForm" action="" method="POST">
+              <div class="form-group">
+                  <label>Modalidade</label>
+                  <select class="form-control" id="modalidade">
+                    <option value="dirigindo">Dirigindo</option>
+                    <option value="andando">Andando</option>
+                  </select>
 
+                  <label>Cidade</label>
+                  <input type="text" class="form-control" id="cidade" placeholder="Campinas" required>
+
+                  <label>Estado</label>
+                  <select class="form-control" id="estado" required>
+                    <option value="AC">Acre</option>
+                    <option value="AL">Alagoas</option>
+                    <option value="AP">Amapá</option>
+                    <option value="AM">Amazonas</option>
+                    <option value="BA">Bahia</option>
+                    <option value="CE">Ceará</option>
+                    <option value="DF">Distrito Federal</option>
+                    <option value="ES">Espírito Santo</option>
+                    <option value="GO">Goiás</option>
+                    <option value="MA">Maranhão</option>
+                    <option value="MT">Mato Grosso</option>
+                    <option value="MS">Mato Grosso do Sul</option>
+                    <option value="MG">Minas Gerais</option>
+                    <option value="PA">Pará</option>
+                    <option value="PB">Paraíba</option>
+                    <option value="PR">Paraná</option>
+                    <option value="PE">Pernambuco</option>
+                    <option value="PI">Piauí</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="RN">Rio Grande do Norte</option>
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="RO">Rondônia</option>
+                    <option value="RR">Roraima</option>
+                    <option value="SC">Santa Catarina</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="SE">Sergipe</option>
+                    <option value="TO">Tocantins</option>
+                  </select>
+
+                  <label>Link do Youtube</label>
+                  <input type="text" class="form-control" id="link_video" placeholder="https://www.youtube.com/watch?v=SF0--13sONY" required>
+
+                  <label>Link da Rádio</label>
+                  <input type="text" class="form-control" id="link_radio" placeholder="https://www.radio.com/8fw4e84fw.mp3" required>
+
+                  <label>Nome da Rádio</label>
+                  <input type="text" class="form-control" id="nome_radio" placeholder="FM CANÁRIO 108.3" required>
+
+                  <div class="form-group">
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" class="form-control" placeholder="Campinas é uma cidade no sudeste brasileiro, a noroeste de São Paulo. A sua Catedral Metropolitana possui um interior em madeira de jacarandá e um museu de arte sacra." required></textarea>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" id="editar" class="btn btn-success">Editar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+              </div>
+          </form>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+<script>
+
+</script>
+<script type="text/javascript" src="..\static\back\script.js"></script>
 {% include 'footer.html' %}

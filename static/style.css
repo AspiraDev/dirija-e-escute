@@ -1,111 +1,67 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+
 *{
-/* Montserrat Medium = 500 */
-        font-weight: 500;
-        font-family: Montserrat, "Open Sans", Helvetica, Arial, sans-serif;
-    }
-
-body {
-  background-image: url('https://www.vivo.com.br/content/dam/vivo-sites/vivo-com-br/homepage/imagens/fotos/vivo-explica-tv-sem-sinal-o-que-e-sinal-tv-1904-600x400.jpg');
-  
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-family: Montserrat, "Open Sans", Helvetica, Arial, sans-serif;
 }
 
-#myVideo {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
+#pesquisar{
+  margin-top: 10px;
+  height: 50px;
 }
 
 
-  * {
-    box-sizing: border-box;
-  }
-  
-  #pesquisa {
-   
-  border-radius: 10px;
-    
-
-  background-position: 10px 12px;
-
-  background-repeat: no-repeat;
-
-  font-size: 16px;
-
-  border: 1px solid #ddd;
-  margin-bottom: 12px;
-
-
-
-  top: 25%;
+.overlay {
   position: absolute;
-  bottom: 50%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+iframe {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vw;
+  min-height: 100vh;
+  min-width: 200vh;
+}
+
+#config, #lista, .caixa {
+  width: 100%;
+  margin-left: 10px;
+}
+
+
+#descricao{
+  font-size: 1vw;
+}
+
+p{
+  font-size: 18px;
+  font-weight: 500;
+}
+
+
+#pesquisa {
+  border-radius: 10px;
+  border: 1px solid #ddd;
   background: #0000007d;
   color: #ffffff;
-
-  padding: 1%;
-  right: 0;
-  padding-right: 0px;
-  height: 120%;
-  width: 100%;
-
-
-  }
+  text-align: center;
+  height: 50px;
+}
   
-  #myUL {
-    border-radius: 10px;
-    
-    right: 0;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    margin-top: 25%;
+#myUL{
+  padding-left: 0;
+}
 
-  }
-
-  a{
-    font-size: 0;
-  }
-  
-  #myUL li a {
-    
-
-    border: 1px solid #ddd;
-    margin-top: -1px; /* Prevent double borders */
-    background-color: #f6f6f6;
-    padding: 12px;
-    text-decoration: none;
-    font-size: 18px;
-    color: black;
-    display: block;
-
-    margin-bottom: 10px;
-    width: 100%;
-    font-size: 18px;
-    padding: 10px;
-    border: none;
-    background: #0000007d;
-    color: #fff;
-    cursor: pointer;
-    
-
-  }
-  
-  #myUL li a:hover:not(.header) {
-    background-color: #eee;
-  }
- 
-/* Add some content at the bottom of the video/page */
-.content {
-  
-  height: 25%;
+.bottom {
   position: fixed;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
@@ -115,105 +71,74 @@ body {
   padding-top: 5px;
 }
 
-.content1 {
-  
-  top: 0%;
-  position: absolute;
-  bottom: 50%;
-  background: rgb(0 0 0 / 0%);
+.top {
+  zoom: 0.7;
+  position: relative;
+  display: flex;
   color: #f1f1f1;
-  width: 15%;
-  padding: 20px;
-  right: 0;
-  padding: 1%;
-  right: 0;
-  padding-right: 0px;
-  height: 0;
-  
+  width: 100%;
+  height: 161px;
+  border-radius: 20px;
 }
 
-/* Style the button used to pause/play the video */
-#comecar {
+#data{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#dataHora{
+  font-weight: 600;
+}
+
+.myBtn, #player, #ambiente {
   border-radius: 10px;
-  margin-bottom: 400px;
-
-  font-size: 18px;
-  padding: 4%;
-  border: none;
-  background: #0000007d;
-  color: #fff;
-  cursor: pointer;
-}
-
-#comecar:hover {
-  background: #ddd;
-  color: black;
-}
-
-#myBtn, #player, #ambiente {
-  border-radius: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 2px;
   width: 100%;
   font-size: 18px;
-  padding: 4%;
+  padding: 1%;
   border: none;
-  background: #0000007d;
+  background: rgba(0, 0, 0, 0.65);
   color: #fff;
-  cursor: pointer;
+  height: 38px;
 }
 
-#myBtn:hover, #player:hover, #ambiente:hover {
+.myBtn:hover, #player:hover, #ambiente:hover {
   background: #ddd;
   color: black;
 }
-
-.bg_video{
-  pointer-events: none;
-}
-
 
 audio { display:none;}
 
-html, body {margin: 0; height: 100%; overflow: hidden}
-
-.radio{
-padding-right: 0px;
-  font-weight: bold;
+.caixa{
   text-align: center;
-  top: 10%;
-  position: relative;
-  bottom: 50%;
-  background: rgba(0, 0, 0, 0.274);
-  color: #f1f1f1;
+  background: rgba(0, 0, 0, 0.65);
   width: 100%;
-  padding: 5%;
-  margin-top: 20px;
-  border-radius: 15px;
-
+  padding: 1%;
+  margin-left: 10px;
+  border-radius: 0px 0px 25px 25px;
+  height: 100%;
 }
 
 ::-webkit-scrollbar {
 width: 15px;
-
 }
 
-/* Track */
+
 ::-webkit-scrollbar-track {
 box-shadow: inset 0 0 5px grey; 
 border-radius: 0px;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
 background: #0000007d;
 border-radius: 0px;
 }
 
-/* Handle on hover */
+
 ::-webkit-scrollbar-thumb:hover {
 background: #0000007d;
 }
-
 
 
 
@@ -307,38 +232,22 @@ color: transparent;
 }
 
 
+h1 {
+  text-transform:capitalize;
+  font-weight: bold;
+  font-size: 2.5vw;
+}
 
-#buttonBox {
-  
+#listaCidades {
   left: 0;
   bottom: 0;
-  height: 150px;
-  
+  height: 155px;
   border-radius: 3px;
   overflow-y: auto;
 }
 
-ol li{
-list-style-type: none;
-padding-left: 0px;
-}
 
 
-.close-btn {
-  width: 10%;
-  height: 20%;
-  background: rgba(255, 255, 255, 0.205);
-  color: #000;
-  font: 20px Arial;
-  text-align: center;
-  border: 1px solid rgba(0, 0, 0, .15);
-  display: block;
-  position: absolute;
-  left: 90%;
-  right: 0;
-  top: 0%;
-  bottom: 0;
-}
 
 ::placeholder { 
   color: white;
@@ -346,95 +255,30 @@ padding-left: 0px;
 }
 
 
-.bg_video, iframe {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  width: 100vw;
-  height: 56.25vw;
-  /* 9/16*100 = 56.25 */
-  min-height: 100vh;
-  min-width: 177.77vh;
-  /* 16/9*100 = 177.77 */
-}
-iframe {
-  opacity: 0;
-}
-iframe.loaded {
-  opacity: 1;
-}
 
-
-
-
-
-#sidebar {
-  position:absolute;
-  top:0px;
-  right:0px;
-  width: 95%;
-  height:100%;
-  
-
-  transition:all 300ms linear;
+@media screen and (max-width: 800px) {
+  .top {
+    width: 40%!important; 
+    flex-direction: column;
+  }
+  .caixa {
+    border-radius: 25px 25px 25px 25px;
+  }
+  #config, #lista, .caixa {
+    margin-bottom: 10px;
+  }
+  #descricao {
+    font-size: 2vw;
 }
-#sidebar.active {
-  right: -100%;
+  h1 {
+
+    font-size: 4vw;
 }
-#sidebar .toggle-btn {
-  position:absolute;
-  right: 80%;
-  top:80%;
-}
-#sidebar .toggle-btn span {
-  
-  display:block;
-  width:30px;
-  height:5px;
-  background:#151719;
-  margin:5px 0px;
-  cursor:pointer;
-  
-}
-#sidebar div.list div.item {
-  padding:15px 10px;
-  border-bottom:1px solid #444;
-  color:#fcfcfc;
-  text-transform:uppercase;
-  font-size:12px;
 }
 
-#sidebar div.list div.item a{
-  color:#fcfcfc;
-  text-decoration: none;
-}
-
-
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-
-
-
-.arrow-down {
-  width: 50px;
-  height: 50px;
-  background-image: url('https://i.ibb.co/F5vMh9Z/direita.png');
-  opacity: .4; 
-  background-size: 100%;
-  position: relative;
-  filter: invert(100%); 
-  top: 200px;
-  right: 90%;
-}
-
-.arrow-down.active {
-  top: 200px;
-  background-image: url('https://i.ibb.co/WzvG2FG/esquerda.png');
-  opacity: .4; 
-  filter: invert(100%); 
-}
+  body{
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+  }

@@ -22,20 +22,26 @@ cd dirija-e-escute
 # Instale as dependências
 pip install flask
 pip install pymongo
-
+pip install youtubesearchpython
+pip install wikipedia
 ```
 
 ## Instruções
 ```sh
-1. Configure seu banco de dados MongoDB em: main.py
+1. Configure seu banco de dados MongoDB em: db.py
 
 2. Rode o projeto
 > set FLASK_ENV=development
-> flask run
+> set FLASK_APP=main.py
+> flask --app main.py --debug run
 
 3. Adicione as informações no painel de administrador:
-http://127.0.0.1:8000/admin
+http://127.0.0.1:5000/admin/dirigindo
+```
+
+4. Acesse em:
+http://127.0.0.1:5000/
 ```
 
 ## Live Preview
-https://dirigindo-nas-cidades.brasileiras.repl.co
+https://dirigindo.ouvindo.repl.co/
